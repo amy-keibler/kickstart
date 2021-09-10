@@ -13,3 +13,5 @@ Hello/
 clicli/
 sample/
 testing/
+/.direnv/
+/result
