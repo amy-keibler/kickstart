@@ -9,22 +9,19 @@
       pkgs = nixpkgs.legacyPackages."${system}";
       naersk-lib = naersk.lib."${system}";
     in rec {
-      # `nix build`
       packages.kickstart = naersk-lib.buildPackage {
         pname = "kickstart";
         root = ./.;
       };
       defaultPackage = packages.kickstart;
 
-      # `nix run`
       apps.kickstart = utils.lib.mkApp {
         drv = packages.kickstart;
         exePath = "/bin/kickstart";
       };
-      defaultApp = apps.kickstart;
+      apps.default = apps.kickstart;
 
-      # `nix develop`
-      devShell = pkgs.mkShell {
+      devShells.default = pkgs.mkShell {
         nativeBuildInputs = with pkgs; [ rustc cargo clippy rustfmt rust-analyzer ];
 
         RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
