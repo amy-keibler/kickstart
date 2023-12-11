@@ -215,6 +215,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore] // Skip for Nix Flake check
     fn can_generate_from_remote_repo() {
         let dir = tempdir().unwrap();
         let tpl = Template::from_input("https://github.com/Keats/rust-cli-template", None).unwrap();
@@ -226,6 +227,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore] // Skip for Nix Flake check
     fn can_generate_from_remote_repo_with_subdir() {
         let dir = tempdir().unwrap();
         let tpl =
