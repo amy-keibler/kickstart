@@ -398,6 +398,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore] // Skip for Nix Flake check
     fn can_generate_from_remote_repo() {
         let dir = tempdir().unwrap();
         let mut tpl =
@@ -411,6 +412,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore] // Skip for Nix Flake check
     fn can_generate_from_remote_repo_with_directory() {
         let dir = tempdir().unwrap();
         let mut tpl =
