@@ -24,7 +24,7 @@
 
   outputs = { self, nixpkgs, flake-utils, crane, rust-overlay, ... }:
     flake-utils.lib.eachDefaultSystem (system:
-            let
+      let
         pkgs = import nixpkgs {
           inherit system;
           overlays = [ (import rust-overlay) ];
@@ -55,8 +55,9 @@
         kickstart = craneLib.buildPackage (commonArgs // {
           inherit cargoArtifacts;
         });
-    in rec {
-      checks = {
+      in
+      rec {
+        checks = {
           inherit kickstart;
 
           clippy = craneLib.cargoClippy (commonArgs // {
@@ -74,6 +75,9 @@
 
         packages.kickstart = kickstart;
         packages.default = packages.kickstart;
+
+        overlays.kickstart = _final: _prev: { kickstart = packages.kickstart; };
+        overlays.default = overlays.kickstart;
 
         devShells.default = pkgs.mkShell {
           inputsFrom = builtins.attrValues self.checks.${system};
@@ -93,5 +97,5 @@
             nixpkgs-fmt
           ];
         };
-    });
+      });
 }
