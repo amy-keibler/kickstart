@@ -7,19 +7,16 @@
 
     crane = {
       url = "github:ipetkov/crane";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
       };
     };
 
     utils.url = "github:numtide/flake-utils";
-    naersk.url = "github:nmattia/naersk";
   };
 
   outputs = { self, nixpkgs, flake-utils, crane, rust-overlay, ... }:
@@ -75,9 +72,6 @@
 
         packages.kickstart = kickstart;
         packages.default = packages.kickstart;
-
-        overlays.kickstart = _final: _prev: { kickstart = packages.kickstart; };
-        overlays.default = overlays.kickstart;
 
         devShells.default = pkgs.mkShell {
           inputsFrom = builtins.attrValues self.checks.${system};
